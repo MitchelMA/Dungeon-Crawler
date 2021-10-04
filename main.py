@@ -5,6 +5,7 @@ class GameInstance():
     def __init__(self):
         self.encoding = 'utf-8'
         self.new_in_scene = True
+        self.in_fight = False
         self.kill = False
         self.char_list = {
             "¶": 'player',
@@ -27,7 +28,7 @@ class GameInstance():
                 "triggers": {
                     "doors": ['30 29 fieldtwo']
                 },
-                "monsters": ['28 easy', '13 easy']
+                "monsters": ['28 easy', '13 hard']
             },
             "fieldtwo": {
                 "file": "./secondfield.txt",
@@ -45,13 +46,20 @@ class GameInstance():
         self.player_lvl = 1
         self.player_xp = 0
         self.player_total_hp = self.extra_data['player']['total-hitpoints'] + (self.player_lvl - 1) * self.extra_data['player']['level-up-info']['hitpoints-up']
+        self.player_current_hp = self.player_total_hp
+        self.cur_monster_data = {
+            **self.extra_data['monsters'],
+            'niveau': None,
+            'index': None,
+            "current_hp": None
+        }
         if "__scene_init__":
             self.scene_init()
 
 
     def scene_init(self):
         os.system('cls')
-        print(self.display_scene, self.extra_data, self.player_total_hp)
+        print(f'scène: {self.display_scene}\nhp: {self.player_current_hp} / {self.player_total_hp}')
         if self.new_in_scene:
             readScene = open(self.scenes[self.display_scene]['file'], 'r', encoding=self.encoding)
             self.shown_scene = list(readScene.read())
@@ -86,6 +94,7 @@ class GameInstance():
                 self.shown_scene[player_index] = norm_scene[player_index]
                 self.shown_scene[next_player_index] = '¶'
                 self.shown_scene = ''.join(self.shown_scene)
+                self.in_fight = False
                 self.scene_init()
             
             # check if next tile is a door
@@ -101,8 +110,32 @@ class GameInstance():
 
             # check if next tile is a monster            
             if next_player_ground == 'monster':
-                print(f'MONSTER! op {next_player_index}')
-                
+                # print(f'MONSTER! op {next_player_index}')
+                for mon in self.scenes[self.display_scene]['monsters']:
+                    if int(mon.split(' ')[0]) == next_player_index:
+                        self.cur_monster_data['index'] = mon.split(' ')[0]
+                        self.cur_monster_data['niveau'] = mon.split(' ')[1]
+                        break
+
+                if self.in_fight == False:
+                    self.cur_monster_data['current_hp'] = self.cur_monster_data[self.cur_monster_data['niveau']]['total-hitpoints']
+                    self.in_fight = True
+                turn_damage = self.extra_data['player']['damage'][0] + random.randint(0, self.extra_data['player']['damage'][1] - self.extra_data['player']['damage'][0])
+                monster_damage = self.cur_monster_data[self.cur_monster_data['niveau']]['damage'][0] + random.randint(0, self.cur_monster_data[self.cur_monster_data['niveau']]['damage'][1] - self.cur_monster_data[self.cur_monster_data['niveau']]['damage'][0])
+                self.cur_monster_data['current_hp'] = self.cur_monster_data['current_hp'] - turn_damage
+                self.player_current_hp = self.player_current_hp - monster_damage
+                print(f'{self.cur_monster_data["current_hp"]}/{self.cur_monster_data[self.cur_monster_data["niveau"]]["total-hitpoints"]}', turn_damage)
+                self.scene_init()
+                # if monster hp gets under 0
+                if self.cur_monster_data['current_hp'] <= 0:
+                    cur_mon_str = str(self.cur_monster_data['index'] + ' ' + self.cur_monster_data['niveau'])
+                    self.scenes[self.display_scene]['monsters'].remove(cur_mon_str)
+                    readScene = open(self.scenes[self.display_scene]['file'], 'r', encoding=self.encoding)
+                    self.shown_scene = list(self.shown_scene)
+                    self.shown_scene[int(self.cur_monster_data['index'])] = readScene.read()[int(self.cur_monster_data['index'])]
+                    self.scene_init()
+
+
             # print(player_index, self.shown_scene[player_index], dir(norm_scene), norm_scene[player_index])
         if i.name == 'esc':
             self.kill = True
