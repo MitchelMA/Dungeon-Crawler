@@ -9,6 +9,11 @@ player:
       - '3 30'
       - '4 60'
       - '5 120'
+      - '6 180'
+      - '7 240'
+      - '8 310'
+      - '9 390'
+      - '10 460'
     hitpoints-up: 10
     damage:
       - 5
@@ -39,7 +44,18 @@ monsters:
     drops:
       - 'key:100 / 100'
     experience-points: 28
+  boss:
+    total-hitpoints: 130
+    damage:
+      - 40
+      - 55
+    experience-points: 80
 
 items:
   healing-potions:
     heal: 25
+  xp-up:
+    small: 25
+    medium: 40
+    big: 60
+    humongous: 120
