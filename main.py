@@ -1,6 +1,6 @@
-from math import nan
 import keyboard, time, os, yaml, random
 from yaml.loader import FullLoader
+from playsound import playsound
 
 class GameInstance():
     def __init__(self):
@@ -193,6 +193,8 @@ class GameInstance():
                 # get random damage
                 turn_damage = self.extra_data['player']['damage'][0] + (self.extra_data['player']['level-up-info']['damage'][0] * self.player_lvl) + random.randint(0, (self.extra_data['player']['damage'][1] + (self.extra_data['player']['level-up-info']['damage'][1] * self.player_lvl)) - (self.extra_data['player']['damage'][0] + (self.extra_data['player']['level-up-info']['damage'][0] * self.player_lvl)))
                 monster_damage = self.cur_monster_data[self.cur_monster_data['niveau']]['damage'][0] + random.randint(0, self.cur_monster_data[self.cur_monster_data['niveau']]['damage'][1] - self.cur_monster_data[self.cur_monster_data['niveau']]['damage'][0])
+
+                playsound('beep-07a.wav')
 
                 # set hp
                 self.cur_monster_data['current_hp'] = self.cur_monster_data['current_hp'] - turn_damage
