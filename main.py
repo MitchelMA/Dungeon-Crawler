@@ -194,7 +194,7 @@ class GameInstance():
                 turn_damage = self.extra_data['player']['damage'][0] + (self.extra_data['player']['level-up-info']['damage'][0] * self.player_lvl) + random.randint(0, (self.extra_data['player']['damage'][1] + (self.extra_data['player']['level-up-info']['damage'][1] * self.player_lvl)) - (self.extra_data['player']['damage'][0] + (self.extra_data['player']['level-up-info']['damage'][0] * self.player_lvl)))
                 monster_damage = self.cur_monster_data[self.cur_monster_data['niveau']]['damage'][0] + random.randint(0, self.cur_monster_data[self.cur_monster_data['niveau']]['damage'][1] - self.cur_monster_data[self.cur_monster_data['niveau']]['damage'][0])
 
-                playsound('beep-07a.wav')
+                # playsound('beep-07a.wav')
 
                 # set hp
                 self.cur_monster_data['current_hp'] = self.cur_monster_data['current_hp'] - turn_damage
