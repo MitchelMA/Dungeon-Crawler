@@ -1,3 +1,4 @@
+from math import nan
 import keyboard, time, os, yaml, random
 from yaml.loader import FullLoader
 
@@ -16,14 +17,14 @@ class GameInstance():
             "┐": 'corner',
             "┘": 'corner',
             "└": 'corner',
-            "┌": 'corner',
+            " ": 'corner',
             '¤': 'chest',
             '§': 'door',
             '+': 'healing_potion'
         }
         self.scenes = {
             "test": {
-                "file":"./testfield.txt",
+                "file":"./levels/testfield.txt",
                 "spawn": 10,
                 "width": 8,
                 "triggers": {
@@ -33,16 +34,28 @@ class GameInstance():
                 "monsters": ['28 medium', '13 hard']
             },
             "fieldtwo": {
-                "file": "./secondfield.txt",
+                "file": "./levels/secondfield.txt",
                 "spawn": 33,
                 "width": 28,
                 "triggers": {
                     "doors": ['28 29 test'],
                     "healing_potions": ['35', '36', '37']
                 }
+            },
+            "level-1": {
+                "file": "./levels/level-1.txt",
+                "spawn": 54,
+                "width": 52,
+                "triggers": {
+                    "doors": ['438 None level-2'],
+                    "healing_potions": ['53', '73', '365', '385', '729', '749']
+                } 
+            },
+            "level-2": {
+                "file": './levels/level-2.txt'
             }
         }
-        self.display_scene = 'fieldtwo'
+        self.display_scene = 'level-1'
         self.shown_scene = ''
         outerYaml = open('data.yaml', 'r', encoding=self.encoding)
         self.extra_data = yaml.load(outerYaml, Loader=FullLoader)
@@ -117,6 +130,7 @@ class GameInstance():
                         break
                 if corresponding != None:
                     self.through_door(corresponding.split(' '))  
+                    pass
 
             # check if next tile is a monster            
             if next_player_ground == 'monster':
