@@ -20,13 +20,23 @@ monsters:
     damage:
       - 5
       - 10
+    drops:
+      - 'key: 50 / 100'
   medium:
     total-hitpoints: 65
     damage:
       - 10
       - 20
+    drops:
+      - 'key: 70 / 100'
   hard:
     total-hitpoints: 75
     damage:
       - 20
       - 30
+    drops:
+      - 'key: 100 / 100'
+
+items:
+  healing-potions:
+    heal: 25

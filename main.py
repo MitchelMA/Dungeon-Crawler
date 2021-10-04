@@ -1,4 +1,4 @@
-import keyboard, time, os, yaml
+import keyboard, time, os, yaml, random
 from yaml.loader import FullLoader
 
 class GameInstance():
@@ -97,9 +97,12 @@ class GameInstance():
                         corresponding = i
                         break
                 if corresponding != None:
-                    self.through_door(corresponding.split(' '))              
+                    self.through_door(corresponding.split(' '))  
+
+            # check if next tile is a monster            
             if next_player_ground == 'monster':
                 print(f'MONSTER! op {next_player_index}')
+                
             # print(player_index, self.shown_scene[player_index], dir(norm_scene), norm_scene[player_index])
         if i.name == 'esc':
             self.kill = True
