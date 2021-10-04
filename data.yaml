@@ -5,10 +5,10 @@ player:
     - 35
   level-up-info:
     xp-needed:
-      - 2: 15
-      - 3: 30
-      - 4: 60
-      - 5: 120
+      - '2 15'
+      - '3 30'
+      - '4 60'
+      - '5 120'
     hitpoints-up: 10
     damage:
       - 5
@@ -21,21 +21,24 @@ monsters:
       - 5
       - 10
     drops:
-      - 'key: 50 / 100'
+      - 'key:50 / 100'
+    experience-points: 7
   medium:
     total-hitpoints: 65
     damage:
       - 10
       - 20
     drops:
-      - 'key: 70 / 100'
+      - 'key:70 / 100'
+    experience-points: 14
   hard:
     total-hitpoints: 75
     damage:
       - 20
       - 30
     drops:
-      - 'key: 100 / 100'
+      - 'key:100 / 100'
+    experience-points: 28
 
 items:
   healing-potions:
