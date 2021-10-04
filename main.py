@@ -17,7 +17,7 @@ class GameInstance():
             "┐": 'corner',
             "┘": 'corner',
             "└": 'corner',
-            " ": 'corner',
+            "┌": 'corner',
             '¤': 'chest',
             '&': 'xp-bottle',
             '§': 'door',
