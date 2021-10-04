@@ -1,5 +1,5 @@
 ┌────────────────────────┐
 │                        │
-│  Press Space to start  │
+│  Press Space to play   │
 │                        │
 └────────────────────────┘
